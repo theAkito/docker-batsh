@@ -12,4 +12,5 @@ RUN apt-get -y update && \
   apt-get clean
 #TODO: Install opam
 #TODO: Install BATSH dependencies
+#TODO: opam switch 4.02.3
 #TODO: Install BATSH
