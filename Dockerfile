@@ -19,7 +19,7 @@ RUN \
 USER opam
 ENV HOME=/home/opam
 WORKDIR /home/opam
-RUN \
+RUN                                                                       \
   /bin/sh -c "mkdir .ssh && chmod 700 .ssh"                            && \
   echo 'wrap-build-commands: []' > ~/.opamrc-nosandbox                 && \
   echo 'wrap-install-commands: []' >> ~/.opamrc-nosandbox              && \
@@ -51,7 +51,8 @@ RUN \
   opam switch 4.02.2                                                   && \
   /bin/sh -c "opam install -y depext"
 COPY docker/opam2 /usr/local/bin/opam
-RUN /bin/sh -c "opam install -y batsh.0.0.6"                           && \
+RUN                                                                       \
+  /bin/sh -c "opam install -y batsh.0.0.6"                             && \
  #echo "source /home/opam/.profile" >> /home/opam/.bashrc              && \
   echo "eval $(opam env)" >> /home/opam/.bashrc
 ENV OPAMYES=1
