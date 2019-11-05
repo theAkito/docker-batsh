@@ -1,7 +1,7 @@
 FROM debian:stable
 MAINTAINER Akito <akito.kitsune@protonmail.com>
 RUN \
-  /bin/sh -c ln -fs /usr/share/zoneinfo/Europe/London /etc/localtime   && \
+  /bin/sh -c "ln -fs /usr/share/zoneinfo/Europe/London /etc/localtime" && \
   apt-get -y update                                                    && \
   DEBIAN_FRONTEND=noninteractive apt-get -y upgrade                    && \
   echo 'Acquire::Retries "5";' > /etc/apt/apt.conf.d/mirror-retry      && \
@@ -21,9 +21,8 @@ RUN \
 USER opam
 ENV HOME=/home/opam
 WORKDIR /home/opam
-# Check if needed when installing without(?) bwrap, etc.
 RUN \
-  /bin/sh -c mkdir .ssh && chmod 700 .ssh                              && \
+  /bin/sh -c "mkdir .ssh && chmod 700 .ssh"                            && \
   echo 'wrap-build-commands: []' > ~/.opamrc-nosandbox                 && \
   echo 'wrap-install-commands: []' >> ~/.opamrc-nosandbox              && \
   echo 'wrap-remove-commands: []' >> ~/.opamrc-nosandbox               && \
@@ -49,18 +48,13 @@ RUN \
     >> /home/opam/opam-sandbox-enable                                  && \
   chmod a+x /home/opam/opam-sandbox-enable                             && \
   sudo mv /home/opam/opam-sandbox-enable /usr/bin/opam-sandbox-enable  && \
-  git config --global user.email "docker@example.com"                  && \
-  git config --global user.name "Docker"                               && \
-  git clone git://github.com/ocaml/opam-repository                        \
-    /home/opam/opam-repository
-  
-RUN opam switch create 4.02 ocaml-base-compiler.4.02.3                 
-ENTRYPOINT ["opam" "config" "exec" "--"]
-RUN /bin/sh -c opam install -y depext
+  opam init --bare -a --disable-sandboxing                             && \
+  #echo "source /home/opam/.profile" >> /home/opam/.bashrc             && \
+  opam switch create 4.02.2 ocaml-base-compiler.4.02.2                 && \
+  opam switch 4.02.2                                                   && \
+  /bin/sh -c "opam install -y depext"
+COPY docker/opam2 /usr/local/bin/opam
+RUN /bin/sh -c "opam install -y batsh.0.0.6"                           && \
+  echo "eval $(opam env)" >> /home/opam/.bashrc
 ENV OPAMYES=1
 CMD ["/bin/sh" "-c" "bash"]
-  
-#TODO: Install opam
-#TODO: Install BATSH dependencies
-#TODO: opam switch 4.02.3
-#TODO: Install BATSH
