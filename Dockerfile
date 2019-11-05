@@ -53,7 +53,7 @@ RUN                                                                       \
 COPY docker/opam2 /usr/local/bin/opam
 RUN                                                                       \
   /bin/sh -c "opam install -y batsh.0.0.6"                             && \
- #echo "source /home/opam/.profile" >> /home/opam/.bashrc              && \
+  rm /home/opam/.bash_profile /home/opam/.bash_login                   && \
   echo "eval $(opam env)" >> /home/opam/.bashrc
 ENV OPAMYES=1
 CMD ["/bin/sh" "-c" "bash"]
