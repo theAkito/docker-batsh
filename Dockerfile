@@ -4,9 +4,8 @@ RUN                                                                       \
   /bin/sh -c "ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime" && \
   apt-get -y update                                                    && \
   echo 'Acquire::Retries "5";' > /etc/apt/apt.conf.d/mirror-retry      && \
-  DEBIAN_FRONTEND=noninteractive apt-get -y upgrade                    && \
-  DEBIAN_FRONTEND=noninteractive apt-get -y install                       \
-    sudo                                                                  \
+  DEBIAN_FRONTEND=noninteractive apt-get -y install                    && \
+    --no-install-recommends                                               \
     pkg-config                                                            \
     build-essential                                                       \
     m4                                                                    \
