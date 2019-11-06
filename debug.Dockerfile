@@ -39,11 +39,10 @@ RUN eval $(opam env)
 RUN opam switch 4.02.2                                                   
 RUN eval $(opam env)                                                     
 RUN /bin/sh -c "opam install -y depext"
-RUN                                                                       \
-  eval $(opam env)                                                     && \
-  /bin/sh -c "opam install -y batsh.0.0.6"                             && \
-  eval $(opam env)                                                     && \
-  rm /home/opam/.bash_profile /home/opam/.bash_login                   && \
-  echo "eval $(opam env)" >> /home/opam/.bashrc
+RUN eval $(opam env)                                  
+RUN /bin/sh -c "opam install -y batsh.0.0.6"          
+RUN eval $(opam env)                                  
+RUN rm /home/opam/.bash_profile /home/opam/.bash_login
+RUN echo "eval $(opam env)" >> /home/opam/.bashrc
 ENV OPAMYES=1
 CMD ["/bin/sh" "-c" "bash"]
