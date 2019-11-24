@@ -1,6 +1,4 @@
-# BATSH in Docker
-
-## About Batsh
+# About Batsh
 
 Batsh is a simple programming language that compiles to [GNU Bash](https://www.gnu.org/software/bash/) and [Windows Batch](http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/batch.mspx).
 It enables you to write your script once runs on all platforms without **any** additional dependency.
